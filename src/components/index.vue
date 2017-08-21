@@ -64,6 +64,8 @@
 
   .classes {
     background: #fff;
+    position: sticky;
+    top: 0;
     ul {
       li {
         float: left;
