@@ -5,7 +5,7 @@
       <a href="javascript:;" class="enter"></a>
       <a href="javascript:;" class="wechat"></a>
     </div>
-    <div class="classes clearfix">
+    <div class="classes clearfix" :class="{fixed:isTop}" ref="classes">
       <ul class="clearfix">
         <li v-for="(item,index) in classes" :key="index">
           <a href="javascript:;">{{item}}</a>
@@ -29,8 +29,24 @@
     },
     data() {
       return {
-        classes: ['全部课程', '哑铃训练', '杠铃训练']
+        classes: ['全部课程', '哑铃训练', '杠铃训练'],
+        isTop:false
       }
+    },
+    computed:{
+      offsetTopY(){
+        return this.$refs.classes.offsetTop
+      }
+    },
+    methods:{
+      isTops(){
+        this.isTop=window.scrollY>=this.offsetTopY?true:false
+      }
+    },
+    mounted(){
+      this.$nextTick(()=>{
+        window.addEventListener('scroll',this.isTops)
+      })
     }
   }
 </script>
@@ -64,8 +80,7 @@
 
   .classes {
     background: #fff;
-    position: sticky;
-    top: 0;
+    width: 100%;
     ul {
       li {
         float: left;
@@ -81,5 +96,9 @@
         }
       }
     }
+  }
+  .fixed{
+    position: fixed !important;
+    top:0 !important;
   }
 </style>
