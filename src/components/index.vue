@@ -12,25 +12,36 @@
         </li>
       </ul>
     </div>
-    <class-item></class-item>
-    <class-item></class-item>
-    <class-item></class-item>
-    <class-item></class-item>
-    <class-item></class-item>
-    <class-item></class-item>
+    <!--<class-item></class-item>-->
+    <div>
+      <p v-for="item in list">
+        Line:
+        <span v-text="item"></span>
+      </p>
+      <infinite-loading :on-infinite="onInfinite" ref="infiniteLoading" :distance="distance" :spinner="spinner">
+        <span slot="no-more">
+          加载更多...
+        </span>
+      </infinite-loading>
+    </div>
   </div>
 </template>
 <script>
   import classItem from '../base/class_item'
+  import InfiniteLoading from 'vue-infinite-loading';
 
   export default {
     components: {
-      classItem
+      classItem,
+      InfiniteLoading
     },
     data() {
       return {
         classes: ['全部课程', '哑铃训练', '杠铃训练'],
-        isTop:false
+        isTop:false,
+        list:[],
+        distance:10,
+        spinner:'waveDots'
       }
     },
     computed:{
@@ -40,8 +51,19 @@
     },
     methods:{
       isTops(){
-        this.isTop=window.scrollY>=this.offsetTopY?true:false
-      }
+        this.isTop=window.scrollY>=this.offsetTopY
+      },
+      onInfinite() {
+        setTimeout(() => {
+          const temp = [];
+          for (let i = this.list.length + 1; i <= this.list.length + 20; i++) {
+            temp.push(i);
+          }
+          this.list = this.list.concat(temp);
+          this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+        }, 5000);
+        console.log(1)
+      },
     },
     mounted(){
       this.$nextTick(()=>{
