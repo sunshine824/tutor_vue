@@ -14,15 +14,9 @@
     </div>
     <!--<class-item></class-item>-->
     <div>
-      <class-item></class-item>
-      <class-item></class-item>
-      <class-item></class-item>
-      <class-item></class-item>
-      <class-item></class-item>
-      <class-item></class-item>
+      <class-item v-for="(item,index) in classes_list" :key="index" :title="item.title" :classes_name="item.classes_name" :price="item.price" :imgUrl="item.imgUrl"></class-item>
       <infinite-loading :on-infinite="onInfinite" ref="infiniteLoading" :distance="distance" :spinner="spinner"
                         v-show="isBottom">
-
       </infinite-loading>
     </div>
   </div>
@@ -44,7 +38,44 @@
         list: [],
         distance: 10,
         spinner: 'waveDots',
-        isBottom: false
+        isBottom: false,
+        classes_list: [
+          {
+            id: 0,
+            title: '课程24：使用哑铃锻炼肩袖肌群',
+            classes_name: '哑铃训练',
+            price: '免费',
+            imgUrl: '../static/images/class_img.png'
+          },
+          {
+            id: 1,
+            title: '课程24：使用哑铃锻炼肩袖肌群1',
+            classes_name: '哑铃训练',
+            price: 5,
+            imgUrl: '../static/images/class_img.png'
+          },
+          {
+            id: 2,
+            title: '课程24：使用哑铃锻炼肩袖肌群2',
+            classes_name: '哑铃训练',
+            price: 10,
+            imgUrl: '../static/images/class_img.png'
+          },
+          {
+            id: 3,
+            title: '课程24：使用哑铃锻炼肩袖肌群3',
+            classes_name: '哑铃训练',
+            price: 20,
+            imgUrl: '../static/images/class_img.png'
+          },
+          {
+            id: 4,
+            title: '课程24：使用哑铃锻炼肩袖肌群4',
+            classes_name: '哑铃训练',
+            price: '免费',
+            imgUrl: '../static/images/class_img.png'
+          },
+        ]
       }
     },
     computed: {
