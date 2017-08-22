@@ -7,21 +7,22 @@
     </div>
     <div class="classes clearfix" :class="{fixed:isTop}" ref="classes">
       <ul class="clearfix">
-        <li v-for="(item,index) in classes" :key="index">
-          <a href="javascript:;">{{item}}</a>
+        <li v-for="(item,index) in classes" :key="index" @click="selectItem(index)">
+          <a href="javascript:;" :class="{active:current==index}">{{item}}</a>
         </li>
       </ul>
     </div>
     <!--<class-item></class-item>-->
     <div>
-      <p v-for="item in list">
-        Line:
-        <span v-text="item"></span>
-      </p>
-      <infinite-loading :on-infinite="onInfinite" ref="infiniteLoading" :distance="distance" :spinner="spinner">
-        <span slot="no-more">
-          加载更多...
-        </span>
+      <class-item></class-item>
+      <class-item></class-item>
+      <class-item></class-item>
+      <class-item></class-item>
+      <class-item></class-item>
+      <class-item></class-item>
+      <infinite-loading :on-infinite="onInfinite" ref="infiniteLoading" :distance="distance" :spinner="spinner"
+                        v-show="isBottom">
+
       </infinite-loading>
     </div>
   </div>
@@ -38,36 +39,42 @@
     data() {
       return {
         classes: ['全部课程', '哑铃训练', '杠铃训练'],
-        isTop:false,
-        list:[],
-        distance:10,
-        spinner:'waveDots'
+        isTop: false,
+        current: 0,
+        list: [],
+        distance: 10,
+        spinner: 'waveDots',
+        isBottom: false
       }
     },
-    computed:{
-      offsetTopY(){
+    computed: {
+      offsetTopY() {
         return this.$refs.classes.offsetTop
       }
     },
-    methods:{
-      isTops(){
-        this.isTop=window.scrollY>=this.offsetTopY
+    methods: {
+      isTops() {
+        this.isTop = window.scrollY >= this.offsetTopY
+      },
+      selectItem(index) {
+        this.current = index
       },
       onInfinite() {
-        setTimeout(() => {
+        /*setTimeout(() => {
           const temp = [];
           for (let i = this.list.length + 1; i <= this.list.length + 20; i++) {
             temp.push(i);
           }
           this.list = this.list.concat(temp);
           this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
-        }, 5000);
+        }, 5000);*/
+        //this.isBottom = true;
         console.log(1)
       },
     },
-    mounted(){
-      this.$nextTick(()=>{
-        window.addEventListener('scroll',this.isTops)
+    mounted() {
+      this.$nextTick(() => {
+        window.addEventListener('scroll', this.isTops)
       })
     }
   }
@@ -112,15 +119,19 @@
         padding: .2rem 0 0 0;
         a {
           color: #5b5b5b;
-          border-bottom: 5px solid #1eacc7;
           padding-bottom: .2rem;
           display: inline-block;
         }
       }
     }
   }
-  .fixed{
+
+  .fixed {
     position: fixed !important;
-    top:0 !important;
+    top: 0 !important;
+  }
+
+  .active {
+    border-bottom: 5px solid #1eacc7;
   }
 </style>
