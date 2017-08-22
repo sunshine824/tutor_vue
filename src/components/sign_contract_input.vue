@@ -90,6 +90,7 @@
       font-size: .45rem;
       color: #505050;
       text-align: center;
+      padding: 0 7%;
     }
   }
 </style>
